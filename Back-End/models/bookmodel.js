@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const bookSchema = mongoose.Schema(
     {
-        titel:{
+        Title:{
             type: String,
             required: true,
         },
@@ -11,7 +11,7 @@ const bookSchema = mongoose.Schema(
             required: true,
         },
         Publisher:{
-            type:Number,
+            type:String,
             required: true,
         },
         Price:{
@@ -24,4 +24,6 @@ const bookSchema = mongoose.Schema(
     }
 );
 
-export const book1 = mongoose.model('cat',bookSchema)
+ export const book1 = mongoose.model('cat',bookSchema)
+
+ 
