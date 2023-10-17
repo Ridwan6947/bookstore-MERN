@@ -7,7 +7,7 @@ import { book1 } from "./models/bookmodel.js";
 const app = express() //defining a new variable for express
 
 // 2 Parameter (req,res)=> arrow function acts as a callback function and '/' is the route path
-app.get('/',(req,res)=>{            //Creating a new route for '/' route . GET is a http method that is used in getting a resource from server
+app.get('/', async (req,res)=>{            //Creating a new route for '/' route . GET is a http method that is used in getting a resource from server
     console.log(req)
     return res.status(234).send(`Welcome`)
     });  
@@ -18,11 +18,7 @@ app.use(express.json());    // this will allow us to trigger the api with JSON f
 //POST is used to create a new resource
 
 
-app.get(()=>{
-    res.send("done");
-});
-
-app.post('/books' , async(req,res) =>{
+app.post('/books' , async(req,res) =>{            // "/books" is the endpoint for which we are settinf http route
     try{
         if(
             !req.body.Title ||
@@ -45,9 +41,19 @@ app.post('/books' , async(req,res) =>{
         //newBook is an object that contains the data for the new book you want to create.
         //Book.create(newBook) is a Mongoose method that inserts a new document into the MongoDB collection associated with the Book model. 
 
+
         return res.status(200).send(book);
     }catch(error){
         console.log(error.message);               //if a error occures print the error message
+        res.status(500).send({message : error.message});
+    }
+});
+
+app.get('/books' , async(req,res) =>{
+    try{
+        const books = await book1.find({})                //sending empty list to the Http route of books to  get the names of all the books in the database server
+        res.status(200).json(books)    //returns list in the form of JSON
+    }catch(error){
         res.status(500).send({message : error.message});
     }
 });
