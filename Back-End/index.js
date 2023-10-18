@@ -117,6 +117,24 @@ app.put('/books/:id',async(req,res) =>{
     }
 });
 
+// made a new HTTP route .delete to delete the record of a book from the database
+app.delete('/books/:id' , async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const result = await book1.findByIdAndDelete(id);
+
+        if(!result){
+            return res.status(404).json({message : 'Book not found'});
+        }
+        return  res.status(200).send({message : 'Book Deleted Successfully'})
+
+    }catch(error){
+        console.log(error.message);
+        res.status(500).send({message : error.message});1
+    }
+
+});
+
 mongoose                     
    .connect(mongoDBURL)              //connect the mongoDB datebase to the server
    .then(()=>{                      //try block for success & catch block for failure
