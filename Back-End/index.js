@@ -49,11 +49,70 @@ app.post('/books' , async(req,res) =>{            // "/books" is the endpoint fo
     }
 });
 
+// Route to get book from database on the basis of its ID
+app.get('/books/:id' , async(req,res) =>{
+    try{
+        const { id } = req.params;
+        const book = await book1.findById(id);
+        return res.status(200).json(book);
+
+    }catch(error){
+        res.status(500).send({message : error.message});
+    }
+
+});
+
+//Route to get book from database in the basis of the Name
+// app.get('/books/:Title' , async(req,res) =>{
+//     try{    
+//         const { Title } = req.params;
+//         const book = await book1.findByTitle(Title);
+//         return res.status(200).json(book);
+
+//     }catch(error){
+//         res.status(500).send({message : error.message});
+//     }
+
+// });
+
+// Route to get all the books from the DataBase
+
 app.get('/books' , async(req,res) =>{
     try{
         const books = await book1.find({})                //sending empty list to the Http route of books to  get the names of all the books in the database server
-        res.status(200).json(books)    //returns list in the form of JSON
+        return res.status(200).json({
+            count: books.length,
+            data: books
+        })    //returns list in the form of JSON
     }catch(error){
+        res.status(500).send({message : error.message});
+    }
+});
+
+//PUT route is used update a data in the database
+app.put('/books/:id',async(req,res) =>{
+    try{
+        if(
+            !req.body.Title ||
+            !req.body.Author ||
+            !req.body.Publisher ||
+            !req.body.Price
+        ){
+            return res.status(400).send({
+                message : 'Send all required Fields',
+            });
+        }
+
+        const { id } = req.params;
+
+        const result = await book1.findByIdAndUpdate(id, req.body);
+        if(!result){
+            return res.status(404).json({message : 'Book not found'});
+        }
+        return res.status(200).send({message : 'Book Updated successfully'})
+        
+    }catch(error){
+        console.log(error.message)
         res.status(500).send({message : error.message});
     }
 });
