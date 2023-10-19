@@ -50,18 +50,18 @@ route.get('/:id', async (req, res) => {
 
 });
 
-//Route to get book from database in the basis of the Name
-// route.get('/books/:Title' , async(req,res) =>{
-//     try{    
-//         const { Title } = req.params;
-//         const book = await book1.findByTitle(Title);
-//         return res.status(200).json(book);
+Route to get book from database in the basis of the Name
+route.get('/books/:Title' , async(req,res) =>{
+    try{    
+        const { Title } = req.params;
+        const book = await book1.findByTitle(Title);
+        return res.status(200).json(book);
 
-//     }catch(error){
-//         res.status(500).send({message : error.message});
-//     }
+    }catch(error){
+        res.status(500).send({message : error.message});
+    }
 
-// });
+});
 
 // Route to get all the books from the DataBase
 
