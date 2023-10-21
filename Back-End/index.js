@@ -7,13 +7,14 @@ import bookRoute from './routes/bookRoute.js'
 const app = express() //defining a new variable for express
 
 //MiddelWare to handel CORS (cross origin resource sharing - restrict the abilty of a webpage to make request to a website of another domain)
-app.use(
-    cors({
-        origin: 'http://localhost:3000',
-        methods: ['GET' , 'POST' , 'DELETE' , 'PUT'],
-        allowedHeaders:['Content-Type']
-    })
-);
+app.use(cors());
+// app.use(
+//     cors({
+//         origin: 'http://localhost:3000',
+//         methods: ['GET' , 'POST' , 'DELETE' , 'PUT'],
+//         allowedHeaders:['Content-Type']
+//     })
+// );
 
 // 2 Parameter (req,res)=> arrow function acts as a callback function and '/' is the route path
 app.get('/', async (req,res)=>{            //Creating a new route for '/' route . GET is a http method that is used in getting a resource from server
